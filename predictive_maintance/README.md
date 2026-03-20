@@ -1,40 +1,68 @@
-# Predictive Maintenance System
+# 🔧 Predictive Maintenance AI
+### *Don't wait for things to break. Know before they do.*
 
-A real-time monitoring and anomaly detection system for traffic signals, CCTV cameras, and microcontrollers using ML (Isolation Forest).
+---
 
-## Features
+A traffic signal that goes dark at 8 AM is a crisis. An ML model that caught it at 2 AM is a win. This system streams live telemetry from every device in the network — traffic signals, CCTV cameras, microcontrollers — and uses an Isolation Forest anomaly detector to flag anything that looks like it's about to fail, before it actually does.
 
-- **Real-time Monitoring**: Live device metrics via WebSocket
-- **ML Anomaly Detection**: Isolation Forest algorithm predicts failures
-- **Interactive Dashboard**: Control & Maintenance views with maps
-- **Alert System**: Instant notifications for anomalies
-- **Dark Mode UI**: Modern, responsive design
+The dashboard shows it all in real time: device health, live metrics, active alerts, and a one-click maintenance queue to close the loop.
 
-## Tech Stack
+---
 
-| Layer | Technology |
-|-------|------------|
-| Frontend | React + Vite + TailwindCSS |
-| Backend | Node.js + Express + Socket.io |
-| Database | MySQL + Prisma ORM |
-| ML Service | Python + FastAPI + scikit-learn |
+## 🗂️ What's Inside
 
-## Quick Start
+```
+predictive_maintance/
+│
+├── backend/                  ← Node.js + Express + Socket.io API
+│   ├── prisma/
+│   │   └── schema.prisma         → Database models
+│   ├── src/
+│   │   ├── routes/               → REST API endpoints
+│   │   ├── services/             → ML client, device simulator
+│   │   └── index.js              → Server entry point
+│   └── .env                      → Your config lives here
+│
+├── frontend/                 ← React + Vite + Tailwind dashboard
+│   └── src/
+│       ├── components/           → Cards, charts, alert panels
+│       ├── hooks/                → useSocket, useDevices
+│       ├── pages/                → Control view, Maintenance view
+│       └── services/             → API client
+│
+├── ml-service/               ← FastAPI anomaly detection service
+│   └── main.py                   → Isolation Forest model
+│
+└── README.md
+```
 
-### 1. Prerequisites
+---
 
-- Node.js 18+
-- Python 3.9+
-- MySQL 8.0+
+## ⚙️ Prerequisites
 
-### 2. Database Setup
+| Tool | Version | Why |
+|------|---------|-----|
+| **Node.js** | 18+ | Backend + frontend |
+| **Python** | 3.9+ | ML service |
+| **MySQL** | 8.0+ | Device metrics storage |
+
+---
+
+## 🚀 Installation
+
+### Step 1 — Create the Database
 
 ```sql
--- Create database
+-- In your MySQL client:
 CREATE DATABASE predictive_maintenance;
 ```
 
-### 3. Configure Backend
+### Step 2 — Configure the Backend
+
+```bash
+cd predictive_maintance/backend
+npm install
+```
 
 Edit `backend/.env`:
 ```
@@ -43,142 +71,152 @@ PORT=5000
 ML_SERVICE_URL=http://localhost:8000
 ```
 
-### 4. Start All Services
-
+Then push the schema and seed sample devices:
 ```bash
-# Backend (terminal 1)
-cd backend
-npm install
 npm run db:push
 npm run db:seed
-npm run dev
+```
 
-# Frontend (terminal 2)
-cd frontend
+### Step 3 — Set Up the ML Service
+
+```bash
+cd ../ml-service
+pip install fastapi uvicorn scikit-learn numpy pandas
+```
+
+### Step 4 — Set Up the Frontend
+
+```bash
+cd ../frontend
 npm install
-npm run dev
-
-# ML Service (terminal 3)
-cd ml-service
-pip install -r requirements.txt
-python main.py
 ```
 
-### 5. Access Application
+---
 
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:5000
-- **ML API Docs**: http://localhost:8000/docs
+## ▶️ Running
 
-## Usage
+Open **three terminals** — one per service.
 
-### Starting Simulation
+```bash
+# Terminal 1 — Backend API
+cd backend && npm run dev
+# Runs on http://localhost:5000
 
-1. Open http://localhost:5173
-2. Click "Start Simulation" button
-3. Watch real-time metrics flowing
-4. ML will detect anomalies and create alerts
+# Terminal 2 — ML Anomaly Service
+cd ml-service && python main.py
+# Runs on http://localhost:8000
 
-### Resolving Alerts
-
-1. Go to Maintenance Dashboard
-2. View active alerts
-3. Click "Mark Resolved" to clear alerts
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/health | Health check |
-| GET | /api/stats | Dashboard statistics |
-| GET | /api/devices | List all devices |
-| GET | /api/metrics/latest | Latest metrics |
-| GET | /api/alerts | List alerts |
-| POST | /api/simulator/start | Start simulation |
-| POST | /api/simulator/stop | Stop simulation |
-| POST | /api/ml/toggle | Toggle ML detection |
-
-## ML Service
-
-### Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /health | ML service health |
-| POST | /predict | Predict anomaly |
-| POST | /retrain | Retrain model |
-
-### Input Format
-```json
-{
-  "temperature": 45.5,
-  "voltage": 225.0,
-  "error_rate": 2.5,
-  "uptime": 95.0
-}
+# Terminal 3 — React Dashboard
+cd frontend && npm run dev
+# Runs on http://localhost:5173
 ```
 
-### Output Format
+Open **http://localhost:5173**, click **"Start Simulation"**, and watch device telemetry stream in live. When a device shows unusual temperature, voltage spikes, or degraded uptime — the ML model flags it instantly and an alert appears.
+
+---
+
+## 📡 API Reference
+
+### Backend (`:5000`)
+
+| Method | Endpoint | What it does |
+|--------|----------|-------------|
+| `GET` | `/api/health` | Health check |
+| `GET` | `/api/devices` | List all monitored devices |
+| `GET` | `/api/metrics/latest` | Latest readings from all devices |
+| `GET` | `/api/alerts` | Active anomaly alerts |
+| `GET` | `/api/stats` | Dashboard summary stats |
+| `POST` | `/api/simulator/start` | Start the telemetry simulator |
+| `POST` | `/api/simulator/stop` | Stop the simulator |
+| `POST` | `/api/ml/toggle` | Enable / disable ML detection |
+
+### ML Service (`:8000`)
+
+| Method | Endpoint | What it does |
+|--------|----------|-------------|
+| `GET` | `/health` | ML service health |
+| `POST` | `/predict` | Run anomaly detection on a reading |
+| `POST` | `/retrain` | Retrain the model on new data |
+| `GET` | `/docs` | Interactive API explorer |
+
+### Anomaly Detection in Action
+
+Send a suspicious device reading:
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"temperature": 72.5, "voltage": 210.0, "error_rate": 8.5, "uptime": 62.0}'
+```
+
+Response:
 ```json
 {
   "anomaly": true,
-  "anomaly_score": 0.75,
+  "anomaly_score": 0.82,
   "model_status": "Prediction complete"
 }
 ```
 
-## Project Structure
+A score above `0.5` means something's wrong. Above `0.75` means go fix it now.
 
-```
-predictive_maintance/
-├── backend/
-│   ├── prisma/
-│   │   └── schema.prisma    # Database schema
-│   ├── src/
-│   │   ├── routes/          # API routes
-│   │   ├── services/        # ML service client
-│   │   └── index.js         # Main server
-│   └── .env                 # Environment config
-├── frontend/
-│   ├── src/
-│   │   ├── components/      # UI components
-│   │   ├── hooks/           # React hooks
-│   │   ├── pages/           # Dashboard pages
-│   │   └── services/        # API client
-│   └── ...
-├── ml-service/
-│   └── main.py              # FastAPI ML service
-└── README.md
+---
+
+## 🔌 WebSocket Events (Socket.io)
+
+The dashboard connects to the backend via Socket.io for live updates — no polling, no refreshing.
+
+```javascript
+// Server → Client (broadcasts automatically)
+io.emit('device:metrics',   { deviceId, temperature, voltage, uptime })
+io.emit('alert:created',    { device, score, timestamp })
+io.emit('alert:resolved',   { alertId })
+
+// Client → Server
+socket.on('driver:location', { ambulanceId, lat, lng })
 ```
 
-## Development Phases
+---
 
-- [x] Phase 0: Setup
-- [x] Phase 1: Database + Models
-- [x] Phase 2: Real-time Device Stream
-- [x] Phase 3: ML Integration
-- [x] Phase 4: Alert System
-- [x] Phase 5: Control Dashboard UI
-- [x] Phase 6: Maintenance Dashboard UI
-- [x] Phase 7: Final Polish
+## 📋 Resolving Alerts
 
-## Troubleshooting
+1. Open **http://localhost:5173**
+2. Click **"Maintenance Dashboard"** tab
+3. Review the list of flagged devices — each shows the anomaly score and affected metrics
+4. Click **"Mark Resolved"** once the physical issue is fixed
+5. The alert clears from the active queue and is logged to history
 
-### Backend won't start?
-- Check MySQL is running
-- Verify DATABASE_URL in .env
-- Run `npm run db:push` to sync schema
+---
 
-### Frontend shows blank page?
-- Check browser console for errors
-- Ensure backend is running on port 5000
-- Check Socket.io connection
+## 🛠️ Troubleshooting
 
-### ML predictions not working?
-- Ensure Python dependencies installed
-- Check ML service is running on port 8000
-- Visit http://localhost:8000/docs for API testing
+**Backend won't start?**
+→ Check MySQL is running and `DATABASE_URL` in `.env` is correct.
+→ Run `npm run db:push` to sync the schema if it's a fresh database.
 
-## License
+**Frontend shows blank page?**
+→ Open browser DevTools → Console. Look for a Socket.io connection error.
+→ Confirm the backend is running on port `5000`.
 
-MIT
+**ML predictions not coming through?**
+→ Make sure `python main.py` is running in `ml-service/`.
+→ Visit **http://localhost:8000/docs** and test `/predict` directly.
+
+**"Table doesn't exist" errors?**
+→ Run `npm run db:push` from the `backend/` folder. Prisma will create the tables.
+
+---
+
+## 🧱 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18 + Vite + Tailwind CSS |
+| Backend | Node.js + Express + Socket.io |
+| Database | MySQL + Prisma ORM |
+| ML Service | Python + FastAPI + scikit-learn |
+| Algorithm | Isolation Forest (unsupervised anomaly detection) |
+
+---
+
+*The best maintenance call is the one that never becomes an emergency.*
