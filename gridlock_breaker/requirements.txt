@@ -1,0 +1,7 @@
+traci
+sumolib
+gymnasium
+stable-baselines3[extra]
+numpy
+fastapi
+uvicorn

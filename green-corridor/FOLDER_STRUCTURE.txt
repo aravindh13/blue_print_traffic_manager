@@ -1,0 +1,61 @@
+green-corridor/
+│
+├── 📄 QUICKSTART.md                 # ← START HERE
+├── 📄 PHASE0_COMPLETE.md
+├── 📄 .env.example
+│
+├── client/                          # React Frontend
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Dashboard.jsx        # ✅ Full dashboard UI
+│   │   │   └── Map.jsx              # ✅ Leaflet map
+│   │   ├── App.jsx                  # ✅ Socket.io + Dashboard
+│   │   ├── main.jsx                 # Entry point
+│   │   ├── index.css                # ✅ Tailwind directives
+│   │   └── App.css                  # Empty (Tailwind only)
+│   ├── public/
+│   ├── index.html
+│   ├── package.json                 # ✅ Updated (Tailwind, Leaflet, Socket.io)
+│   ├── vite.config.js
+│   ├── eslint.config.js
+│   ├── tailwind.config.js            # ✅ NEW
+│   ├── postcss.config.js             # ✅ NEW
+│   └── .env.example                  # ✅ NEW
+│
+└── server/                          # Node.js Backend
+    ├── src/
+    │   ├── models/
+    │   │   ├── Ambulance.js          # ✅ Complete schema
+    │   │   ├── Incident.js           # ✅ Complete schema
+    │   │   ├── Hospital.js           # ✅ Complete schema
+    │   │   └── TrafficSignal.js      # ✅ Complete schema
+    │   │
+    │   ├── routes/
+    │   │   ├── ambulances.js         # ✅ GET, PATCH /location
+    │   │   ├── incidents.js          # ✅ POST (auto-assign), GET
+    │   │   ├── hospitals.js          # ✅ Ready
+    │   │   └── auth.js               # ✅ Ready
+    │   │
+    │   ├── services/
+    │   │   ├── assignment.js         # ✅ findNearestAmbulance()
+    │   │   ├── haversine.js          # ✅ Distance calc
+    │   │   ├── routing.js            # ✅ Route generation
+    │   │   ├── signalPreemption.js   # ✅ Signal control
+    │   │   └── hospitalService.js    # ✅ Hospital recommendations
+    │   │
+    │   ├── middleware/
+    │   │   └── auth.js               # ✅ JWT middleware
+    │   │
+    │   ├── socket/
+    │   │   └── socketHandler.js      # ✅ WebSocket events
+    │   │
+    │   ├── index.js                  # ✅ Express + Socket.io
+    │   └── seed.js                   # ✅ Database seeder
+    │
+    ├── package.json                  # ✅ Full dependencies
+    ├── .env.example                  # ✅ NEW
+    └── README.md
+
+LEGEND:
+✅ = Ready to use
+🚀 = Fully implemented in PHASE 0

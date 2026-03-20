@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Device {
+  id        String   @id @default(uuid())
+  type      String
+  latitude  Float
+  longitude Float
+  location  String   @default("")
+  status    String   @default("healthy")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  metrics   Metric[]
+  alerts    Alert[]
+  
+  @@index([type])
+  @@map("devices")
+}
+
+model Metric {
+  id          String   @id @default(uuid())
+  deviceId    String   @map("device_id")
+  temperature Float
+  voltage     Float
+  errorRate   Float    @map("error_rate")
+  uptime      Float
+  timestamp   DateTime @default(now()) @map("timestamp")
+  
+  device      Device   @relation(fields: [deviceId], references: [id])
+  
+  @@index([deviceId, timestamp])
+  @@map("metrics")
+}
+
+model Alert {
+  id           String   @id @default(uuid())
+  deviceId     String   @map("device_id")
+  issue        String
+  severity     String
+  anomalyScore Float    @map("anomaly_score")
+  resolved     Boolean  @default(false) @map("resolved")
+  createdAt    DateTime @default(now()) @map("created_at")
+  
+  device       Device   @relation(fields: [deviceId], references: [id])
+  
+  @@index([deviceId])
+  @@index([severity])
+  @@map("alerts")
+}
