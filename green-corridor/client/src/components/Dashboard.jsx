@@ -179,71 +179,94 @@ export default function Dashboard() {
     }
   };
 
-  const s = {
-    container: { display: 'flex', flexDirection: 'column', height: '100vh', backgroundColor: '#1a1a2e', color: '#eee' },
-    header: { padding: '16px 24px', backgroundColor: '#16213e', borderBottom: '1px solid #0f3460', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
-    headerLeft: { display: 'flex', alignItems: 'center', gap: '12px' },
-    headerTitle: { fontSize: '20px', fontWeight: '600', margin: 0 },
-    headerSub: { fontSize: '12px', color: '#888', margin: 0 },
-    main: { display: 'flex', flex: 1, overflow: 'hidden' },
-    mapArea: { flex: 1, position: 'relative' },
-    sidebar: { width: '380px', backgroundColor: '#16213e', borderLeft: '1px solid #0f3460', display: 'flex', flexDirection: 'column', overflow: 'hidden' },
-    tabs: { display: 'flex', borderBottom: '1px solid #0f3460' },
-    tab: { flex: 1, padding: '12px 4px', backgroundColor: 'transparent', border: 'none', color: '#888', cursor: 'pointer', fontSize: '11px' },
-    tabActive: { color: '#22c55e', borderBottom: '2px solid #22c55e' },
-    content: { flex: 1, overflow: 'auto', padding: '16px' },
-    section: { marginBottom: '16px' },
-    sectionTitle: { fontSize: '13px', fontWeight: '600', marginBottom: '12px', color: '#ccc' },
-    form: { display: 'flex', flexDirection: 'column', gap: '10px' },
-    input: { width: '100%', padding: '10px 12px', backgroundColor: '#1e1e3f', border: '1px solid #333', borderRadius: '6px', color: '#eee', fontSize: '12px' },
-    button: { width: '100%', padding: '10px 12px', backgroundColor: '#dc2626', border: 'none', borderRadius: '6px', color: 'white', fontWeight: '600', cursor: 'pointer', fontSize: '12px' },
-    buttonDisabled: { backgroundColor: '#666', cursor: 'not-allowed' },
-    card: { padding: '12px', backgroundColor: '#1e1e3f', borderRadius: '8px', marginBottom: '8px' },
-    grid2: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' },
-    badge: { display: 'inline-block', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', fontWeight: '600', color: 'white' },
-    badgeGreen: { backgroundColor: '#22c55e' },
-    badgeRed: { backgroundColor: '#dc2626' },
-    badgeOrange: { backgroundColor: '#f59e0b' },
-    badgeBlue: { backgroundColor: '#3b82f6' },
-    textMuted: { fontSize: '11px', color: '#888' },
-    statBox: { padding: '8px 16px', backgroundColor: '#1e1e3f', borderRadius: '6px' },
-    clickBanner: { position: 'absolute', top: '16px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#3b82f6', color: 'white', padding: '10px 20px', borderRadius: '8px', fontSize: '13px', zIndex: 1000 },
-  };
-
-  const tabStyle = (id) => ({ ...s.tab, ...(activeTab === id ? s.tabActive : {}) });
-
   return (
-    <div style={s.container}>
-      <header style={s.header}>
-        <div style={s.headerLeft}>
-          <div style={{ fontSize: '28px' }}>🚑</div>
+    <div className="container" style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+      <header className="glass-header" style={{ padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', zIndex: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ filter: 'drop-shadow(0 4px 6px rgba(5, 150, 105, 0.3))' }}>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="url(#grad_dash)" />
+              <path d="M9 11.5h6m-3-3v6" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" />
+              <defs>
+                <linearGradient id="grad_dash" x1="12" y1="2" x2="12" y2="22" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#10b981" />
+                  <stop offset="1" stopColor="#059669" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
           <div>
-            <h1 style={s.headerTitle}>Green Corridor</h1>
-            <p style={s.headerSub}>Emergency Response</p>
+            <h1 className="text-gradient" style={{ fontSize: '22px', fontWeight: '800', margin: 0, letterSpacing: '-0.5px' }}>Green Corridor</h1>
+            <p style={{ fontSize: '11px', color: 'var(--text-tertiary)', margin: 0, fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>Emergency Response System</p>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '16px' }}>
-          <div style={s.statBox}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#22c55e' }}>{availableAmb}/{ambulances.length}</div>
-            <div style={s.textMuted}>Available</div>
+          
+          <div className="metric-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '16px', background: 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)', border: '1px solid rgba(16, 185, 129, 0.4)', padding: '16px 24px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '12px', color: 'var(--accent-emerald)', boxShadow: '0 4px 6px rgba(16, 185, 129, 0.1)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--accent-emerald)', lineHeight: 1 }}>{availableAmb}<span style={{fontSize:'14px', color:'rgba(5, 150, 105, 0.6)', fontWeight: '600'}}>/{ambulances.length}</span></div>
+              <div style={{ fontSize: '12px', color: 'var(--accent-emerald)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>Available</div>
+            </div>
           </div>
-          <div style={s.statBox}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#dc2626' }}>{activeIncidents}</div>
-            <div style={s.textMuted}>Active</div>
+
+          <div className="metric-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '16px', background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)', border: '1px solid rgba(234, 88, 12, 0.4)', padding: '16px 24px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '12px', color: '#ea580c', boxShadow: '0 4px 6px rgba(234, 88, 12, 0.1)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="1" y="10" width="22" height="9" rx="2" ry="2"/>
+                <path d="M16 10V6a2 2 0 0 0-2-2H10a2 2 0 0 0-2 2v4"/>
+                <path d="M8 19v2M16 19v2"/>
+                <circle cx="5.5" cy="18.5" r="1.5"/>
+                <circle cx="18.5" cy="18.5" r="1.5"/>
+                <path d="M10 13h1v2h2v-2h1" stroke="currentColor" strokeWidth="1.5"/>
+              </svg>
+            </div>
+            <div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: '#ea580c', lineHeight: 1 }}>
+                {ambulances.filter(a => a.status === 'dispatched' || a.status === 'enroute').length}
+                <span style={{ fontSize: '14px', color: 'rgba(234, 88, 12, 0.6)', fontWeight: '600' }}>/{ambulances.length}</span>
+              </div>
+              <div style={{ fontSize: '12px', color: '#ea580c', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>Ambulances</div>
+            </div>
           </div>
-          <div style={s.statBox}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#10b981' }}>{greenSignals}</div>
-            <div style={s.textMuted}>Green</div>
+
+          <div className="metric-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '16px', background: 'linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%)', border: '1px solid rgba(225, 29, 72, 0.4)', padding: '16px 24px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '12px', color: 'var(--accent-crimson)', boxShadow: '0 4px 6px rgba(225, 29, 72, 0.1)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--accent-crimson)', lineHeight: 1 }}>{activeIncidents}</div>
+              <div style={{ fontSize: '12px', color: 'var(--accent-crimson)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>Active Incidents</div>
+            </div>
           </div>
-          <div style={s.statBox}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#a855f7' }}>{deadlockStatus.totalLocks || 0}</div>
-            <div style={s.textMuted}>Locks</div>
+
+          <div className="metric-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '16px', background: 'linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%)', border: '1px solid rgba(2, 132, 199, 0.4)', padding: '16px 24px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '12px', color: 'var(--accent-ocean)', boxShadow: '0 4px 6px rgba(2, 132, 199, 0.1)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M22 12A10 10 0 0 0 12 2v0a10 10 0 0 0-10 10"/></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--accent-ocean)', lineHeight: 1 }}>{greenSignals}</div>
+              <div style={{ fontSize: '12px', color: 'var(--accent-ocean)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>Green Lights</div>
+            </div>
           </div>
+
+          <div className="metric-card" style={{ flexDirection: 'row', alignItems: 'center', gap: '16px', background: 'linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%)', border: '1px solid rgba(124, 58, 237, 0.4)', padding: '16px 24px' }}>
+            <div style={{ padding: '12px', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '12px', color: 'var(--accent-amethyst)', boxShadow: '0 4px 6px rgba(124, 58, 237, 0.1)' }}>
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: 'var(--accent-amethyst)', lineHeight: 1 }}>{deadlockStatus.totalLocks || 0}</div>
+              <div style={{ fontSize: '12px', color: 'var(--accent-amethyst)', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px', marginTop: '4px' }}>System Locks</div>
+            </div>
+          </div>
+
         </div>
       </header>
 
-      <div style={s.main}>
-        <div style={s.mapArea}>
+      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+        <div style={{ flex: 1, position: 'relative' }}>
           <Map
             ambulances={ambulances}
             incidents={incidents}
@@ -254,62 +277,78 @@ export default function Dashboard() {
             routes={routes}
           />
           {clickMode && (
-            <div style={s.clickBanner} onClick={() => setClickMode(false)}>
-              Click on map to set location
+            <div className="glass-panel" style={{ position: 'absolute', top: '24px', left: '50%', transform: 'translateX(-50%)', padding: '12px 24px', zIndex: 1000, display: 'flex', alignItems: 'center', gap: '12px', border: '1px solid var(--accent-blue)' }}>
+              <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: 'var(--accent-blue)', animation: 'pulse 1.5s infinite' }}></div>
+              <span style={{ fontWeight: '600', color: 'var(--text-main)' }}>Click anywhere on map to set incident location</span>
+              <button onClick={() => setClickMode(false)} className="btn-primary" style={{ padding: '6px 12px', marginLeft: '12px' }}>Cancel</button>
             </div>
           )}
         </div>
 
-        <div style={s.sidebar}>
-          <div style={s.tabs}>
+        <div className="glass-panel" style={{ width: '420px', display: 'flex', flexDirection: 'column', overflow: 'hidden', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}>
+          <div style={{ display: 'flex', borderBottom: '1px solid var(--border-light)', padding: '0 8px' }}>
             {['Map', 'Incidents', 'Fleet', 'Signals', 'Locks'].map(tab => (
-              <button key={tab} onClick={() => setActiveTab(tab.toLowerCase())} style={tabStyle(tab.toLowerCase())}>
+              <button key={tab} onClick={() => setActiveTab(tab.toLowerCase())} className={`tab-btn ${activeTab === tab.toLowerCase() ? 'tab-btn-active' : ''}`}>
                 {tab}
               </button>
             ))}
           </div>
 
-          <div style={s.content}>
+          <div style={{ flex: 1, overflow: 'auto', padding: '24px' }}>
             {activeTab === 'map' && (
               <div>
-                <div style={s.section}>
-                  <h3 style={s.sectionTitle}>Report Incident</h3>
-                  <form onSubmit={handleReport} style={s.form}>
-                    <div style={s.grid2}>
+                <div style={{ marginBottom: '24px' }}>
+                  <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" strokeWidth="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                    Report Incident
+                  </h3>
+                  <form onSubmit={handleReport} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                       <div>
-                        <div style={s.textMuted}>Latitude</div>
-                        <input type="number" step="0.000001" value={newIncident.lat} onChange={e => setNewIncident(p => ({ ...p, lat: e.target.value }))} style={s.input} />
+                        <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '500' }}>Latitude</div>
+                        <input type="number" step="0.000001" value={newIncident.lat} onChange={e => setNewIncident(p => ({ ...p, lat: e.target.value }))} className="form-input" />
                       </div>
                       <div>
-                        <div style={s.textMuted}>Longitude</div>
-                        <input type="number" step="0.000001" value={newIncident.lng} onChange={e => setNewIncident(p => ({ ...p, lng: e.target.value }))} style={s.input} />
+                        <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '500' }}>Longitude</div>
+                        <input type="number" step="0.000001" value={newIncident.lng} onChange={e => setNewIncident(p => ({ ...p, lng: e.target.value }))} className="form-input" />
                       </div>
                     </div>
-                    <button type="button" onClick={() => setClickMode(!clickMode)} style={{ ...s.input, backgroundColor: clickMode ? '#3b82f6' : '#333', cursor: 'pointer' }}>
-                      {clickMode ? 'Click on Map' : 'Set Location'}
+                    <button type="button" onClick={() => setClickMode(!clickMode)} className="btn-primary" style={{ backgroundColor: clickMode ? 'var(--accent-blue)' : '#f1f5f9', color: clickMode ? 'white' : 'var(--text-main)', border: '1px solid #e2e8f0', boxShadow: 'none' }}>
+                      {clickMode ? 'Select Location on Map...' : '📍 Pick on Map'}
                     </button>
-                    <select value={newIncident.severity} onChange={e => setNewIncident(p => ({ ...p, severity: e.target.value }))} style={s.input}>
-                      {[1, 2, 3, 4, 5].map(v => <option key={v} value={v}>Level {v} - {['Low', 'Minor', 'Medium', 'High', 'Critical'][v - 1]}</option>)}
-                    </select>
-                    <input type="text" value={newIncident.description} placeholder="Description" onChange={e => setNewIncident(p => ({ ...p, description: e.target.value }))} style={s.input} />
-                    <button type="submit" disabled={submitting} style={{ ...s.button, ...(submitting ? s.buttonDisabled : {}) }}>
-                      {submitting ? 'Reporting...' : 'Report Incident'}
+                    
+                    <div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '500' }}>Severity Level</div>
+                      <select value={newIncident.severity} onChange={e => setNewIncident(p => ({ ...p, severity: e.target.value }))} className="form-input" style={{ cursor: 'pointer' }}>
+                        {[1, 2, 3, 4, 5].map(v => <option key={v} value={v}>Level {v} - {['Low', 'Minor', 'Medium', 'High', 'Critical'][v - 1]}</option>)}
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginBottom: '4px', fontWeight: '500' }}>Description</div>
+                      <input type="text" value={newIncident.description} placeholder="e.g. Multi-vehicle collision" onChange={e => setNewIncident(p => ({ ...p, description: e.target.value }))} className="form-input" />
+                    </div>
+
+                    <button type="submit" disabled={submitting} className={`btn-primary ${submitting ? '' : 'btn-danger'}`} style={{ marginTop: '8px', padding: '14px' }}>
+                      {submitting ? 'Reporting...' : 'Dispatch Emergency Response'}
                     </button>
                   </form>
-                  {statusMsg && <div style={{ marginTop: '8px', padding: '8px', backgroundColor: '#1e3a5f', borderRadius: '6px', fontSize: '12px', color: '#22c55e' }}>{statusMsg}</div>}
+                  {statusMsg && <div style={{ marginTop: '12px', padding: '12px', background: 'var(--accent-green-bg)', borderRadius: '8px', fontSize: '13px', color: 'var(--accent-green)', fontWeight: '500', border: '1px solid rgba(16, 185, 129, 0.2)' }}>{statusMsg}</div>}
                 </div>
 
                 {hospitalRec && (
-                  <div style={{ ...s.card, border: '1px solid #333' }}>
-                    <div style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>Recommended Hospital</div>
-                    <div style={{ fontSize: '14px', fontWeight: '600' }}>{hospitalRec.hospital?.name}</div>
-                    <div style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>{hospitalRec.hospital?.bedsAvailable} beds</div>
+                  <div className="metric-card" style={{ marginBottom: '16px', background: 'var(--accent-blue-bg)', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
+                    <div style={{ fontSize: '12px', color: 'var(--accent-blue)', marginBottom: '4px', fontWeight: '600', textTransform: 'uppercase' }}>Recommended Hospital Routed</div>
+                    <div style={{ fontSize: '16px', fontWeight: '700', color: 'var(--text-main)' }}>{hospitalRec.hospital?.name}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', marginTop: '4px' }}>Capacity: {hospitalRec.hospital?.capacity} / Trauma Center</div>
                   </div>
                 )}
 
                 {preemptedSignals.length > 0 && (
-                  <div style={{ ...s.card, border: '1px solid #22c55e', backgroundColor: '#1e3a2f' }}>
-                    <div style={{ fontSize: '12px', color: '#22c55e' }}>Green Signals ({preemptedSignals.length})</div>
+                  <div className="metric-card" style={{ background: 'var(--accent-green-bg)', borderColor: 'rgba(16, 185, 129, 0.2)' }}>
+                    <div style={{ fontSize: '13px', color: 'var(--accent-green)', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ fontSize: '16px' }}>🚦</span> Green Corridor Active ({preemptedSignals.length} Signals Preempted)
+                    </div>
                   </div>
                 )}
               </div>
@@ -317,16 +356,21 @@ export default function Dashboard() {
 
             {activeTab === 'incidents' && (
               <div>
-                <h3 style={s.sectionTitle}>Active Incidents ({incidents.length})</h3>
-                {loading ? <div style={{ color: '#666' }}>Loading...</div> : incidents.length === 0 ? <div style={{ color: '#666', textAlign: 'center', padding: '40px' }}>No active incidents</div> : incidents.map(inc => (
-                  <div key={inc._id} style={s.card}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-                      <span style={{ ...s.badge, backgroundColor: inc.severity >= 4 ? '#dc2626' : '#f59e0b' }}>Level {inc.severity}</span>
-                      <span style={{ fontSize: '10px', color: '#888' }}>{inc.status}</span>
+                <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-main)' }}>Active Incidents ({incidents.length})</h3>
+                {loading ? <div style={{ color: 'var(--text-muted)' }}>Loading...</div> : incidents.length === 0 ? <div style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '40px', background: '#f8fafc', borderRadius: '8px' }}>No active incidents</div> : incidents.map(inc => (
+                  <div key={inc._id} className="metric-card" style={{ marginBottom: '12px', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '4px', background: inc.severity >= 4 ? 'var(--accent-red)' : 'var(--accent-yellow)' }} />
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', alignItems: 'center' }}>
+                      <span className={`badge ${inc.severity >= 4 ? 'badge-red' : 'badge-yellow'}`}>Level {inc.severity}</span>
+                      <span style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '600', textTransform: 'uppercase' }}>{inc.status}</span>
                     </div>
-                    <div style={{ fontSize: '13px', marginBottom: '4px' }}>{inc.description || 'Incident'}</div>
-                    <div style={s.textMuted}>{inc.lat?.toFixed(4)}, {inc.lng?.toFixed(4)}</div>
-                    {inc.assignedAmbulance && <div style={{ fontSize: '11px', color: '#3b82f6', marginTop: '4px' }}>{inc.assignedAmbulance.vehicleNumber}</div>}
+                    <div style={{ fontSize: '14px', fontWeight: '600', marginBottom: '6px', color: 'var(--text-main)' }}>{inc.description || 'Emergency Response Required'}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontFamily: 'monospace' }}>📍 {inc.lat?.toFixed(4)}, {inc.lng?.toFixed(4)}</div>
+                    {inc.assignedAmbulance && (
+                      <div style={{ fontSize: '12px', fontWeight: '500', color: 'var(--accent-blue)', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        <span>🚑</span> En Route: {inc.assignedAmbulance.vehicleNumber}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -334,16 +378,16 @@ export default function Dashboard() {
 
             {activeTab === 'fleet' && (
               <div>
-                <h3 style={s.sectionTitle}>Fleet ({ambulances.length})</h3>
-                {loading ? <div style={{ color: '#666' }}>Loading...</div> : (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-main)' }}>Fleet Overview ({ambulances.length})</h3>
+                {loading ? <div style={{ color: 'var(--text-muted)' }}>Loading...</div> : (
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                     {ambulances.map(amb => (
-                      <div key={amb._id} style={{ ...s.card, border: amb.status === 'available' ? '1px solid #22c55e33' : '1px solid #dc262633' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
-                          <span style={{ fontSize: '11px', fontWeight: '600' }}>{amb.vehicleNumber}</span>
-                          <span style={{ ...s.badge, fontSize: '8px', backgroundColor: amb.status === 'available' ? '#22c55e' : '#dc2626' }}>{amb.status}</span>
+                      <div key={amb._id} className="metric-card" style={{ padding: '16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', alignItems: 'center' }}>
+                          <span style={{ fontSize: '13px', fontWeight: '700', color: 'var(--text-main)' }}>{amb.vehicleNumber}</span>
+                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: amb.status === 'available' ? 'var(--accent-green)' : 'var(--accent-red)', boxShadow: `0 0 8px ${amb.status === 'available' ? 'var(--accent-green)' : 'var(--accent-red)'}` }} title={amb.status} />
                         </div>
-                        <div style={s.textMuted}>{amb.driverName}</div>
+                        <div style={{ fontSize: '11px', color: 'var(--text-muted)', fontWeight: '500' }}>👤 {amb.driverName}</div>
                       </div>
                     ))}
                   </div>
@@ -353,17 +397,11 @@ export default function Dashboard() {
 
             {activeTab === 'signals' && (
               <div>
-                <h3 style={s.sectionTitle}>Traffic Signals ({signals.length})</h3>
-                {loading ? <div style={{ color: '#666' }}>Loading...</div> : (
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-main)' }}>Traffic Signals ({signals.length})</h3>
+                {loading ? <div style={{ color: 'var(--text-muted)' }}>Loading...</div> : (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {signals.map(sig => (
-                      <div key={sig._id} style={{
-                        padding: '6px 10px',
-                        backgroundColor: sig.state === 'green' ? '#1a3f1a' : sig.state === 'yellow' ? '#3f3f1a' : '#3f1a1a',
-                        borderRadius: '4px',
-                        fontSize: '10px',
-                        color: sig.state === 'green' ? '#22c55e' : sig.state === 'yellow' ? '#eab308' : '#dc2626'
-                      }}>
+                      <div key={sig._id} className={`badge ${sig.state === 'green' ? 'badge-green' : sig.state === 'yellow' ? 'badge-yellow' : 'badge-red'}`} style={{ padding: '6px 12px', fontSize: '10px' }}>
                         {sig.state === 'green' ? '🟢' : sig.state === 'yellow' ? '🟡' : '🔴'} {sig.name?.split(' ')[0] || 'Signal'}
                       </div>
                     ))}
@@ -374,18 +412,20 @@ export default function Dashboard() {
 
             {activeTab === 'locks' && (
               <div>
-                <h3 style={s.sectionTitle}>Resource Locks</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
-                  <div style={{ ...s.card, textAlign: 'center' }}>
-                    <div style={{ fontSize: '20px', fontWeight: '700', color: '#a855f7' }}>{deadlockStatus.totalLocks || 0}</div>
-                    <div style={s.textMuted}>Active Locks</div>
+                <h3 style={{ fontSize: '15px', fontWeight: '700', marginBottom: '16px', color: 'var(--text-main)' }}>Resource Locks</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '20px' }}>
+                  <div className="metric-card" style={{ textAlign: 'center', padding: '24px 16px' }}>
+                    <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--accent-purple)' }}>{deadlockStatus.totalLocks || 0}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', marginTop: '4px' }}>ACTIVE LOCKS</div>
                   </div>
-                  <div style={{ ...s.card, textAlign: 'center' }}>
-                    <div style={{ fontSize: '20px', fontWeight: '700', color: '#eab308' }}>{deadlockStatus.totalWaiting || 0}</div>
-                    <div style={s.textMuted}>Waiting</div>
+                  <div className="metric-card" style={{ textAlign: 'center', padding: '24px 16px' }}>
+                    <div style={{ fontSize: '28px', fontWeight: '800', color: 'var(--accent-yellow)' }}>{deadlockStatus.totalWaiting || 0}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-muted)', fontWeight: '600', marginTop: '4px' }}>WAIT QUEUE</div>
                   </div>
                 </div>
-                <button onClick={fetchDeadlockStatus} style={{ ...s.input, cursor: 'pointer', backgroundColor: '#333' }}>Refresh</button>
+                <button onClick={fetchDeadlockStatus} className="btn-primary" style={{ width: '100%', background: '#f1f5f9', color: 'var(--text-main)', border: '1px solid #e2e8f0', boxShadow: 'none' }}>
+                  Force Refresh Locks
+                </button>
               </div>
             )}
           </div>

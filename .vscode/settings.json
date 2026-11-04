@@ -1,3 +1,8 @@
 {
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "python.defaultInterpreterPath": "${workspaceFolder}/Traffic_Orchestration/smart_traffic_api/venv/Scripts/python.exe",
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/Traffic_Orchestration",
+        "${workspaceFolder}/Traffic_Orchestration/smart_traffic_api"
+    ]
 }

@@ -38,13 +38,13 @@ function App() {
         <Dashboard />
         <button
           onClick={() => setView('driver-login')}
+          className="glass-panel"
           style={{
-            position: 'fixed', bottom: '20px', right: '20px', padding: '10px 16px',
-            backgroundColor: '#16213e', border: '1px solid #0f3460', borderRadius: '8px',
-            color: '#eee', cursor: 'pointer', fontSize: '12px', zIndex: 1000
+            position: 'fixed', bottom: '24px', right: '24px', padding: '12px 20px',
+            color: 'var(--accent-blue)', cursor: 'pointer', fontSize: '13px', fontWeight: '600', zIndex: 1000
           }}
         >
-          Driver Login
+          Driver Login 👨‍⚕️
         </button>
       </div>
     );
@@ -56,13 +56,13 @@ function App() {
         <Login onLoginSuccess={handleLoginSuccess} />
         <button
           onClick={() => setView('control')}
+          className="glass-panel"
           style={{
-            position: 'fixed', bottom: '20px', left: '20px', padding: '8px 14px',
-            backgroundColor: '#16213e', border: '1px solid #0f3460', borderRadius: '6px',
-            color: '#888', cursor: 'pointer', fontSize: '11px', zIndex: 1000
+            position: 'fixed', top: '24px', left: '24px', padding: '10px 16px',
+            color: 'var(--text-main)', cursor: 'pointer', fontSize: '12px', fontWeight: '500', zIndex: 1000
           }}
         >
-          Control Center
+          ← Back to Control Center
         </button>
       </div>
     );

@@ -8,10 +8,10 @@
 
 | Project | What it does | Status |
 |---------|-------------|--------|
-| [🚦 Traffic Orchestration](#-traffic-orchestration) | YOLO-powered live signal control with AI agents | ✅ Active |
-| [🚑 Green Corridor](#-green-corridor) | Emergency vehicle signal preemption + routing | ✅ Active |
-| [🤖 Gridlock Breaker](#-gridlock-breaker) | Reinforcement learning vs baseline traffic simulation | ✅ Active |
-| [🔧 Predictive Maintenance](#-predictive-maintenance) | ML anomaly detection for traffic infrastructure | ✅ Active |
+| [Traffic Orchestration](#-traffic-orchestration) | YOLO-powered live signal control with AI agents | Active |
+| [ Green Corridor](#-green-corridor) | Emergency vehicle signal preemption + routing | ✅ Active |
+| [ Gridlock Breaker](#-gridlock-breaker) | Reinforcement learning vs baseline traffic simulation | Active |
+| [Predictive Maintenance](#-predictive-maintenance) | ML anomaly detection for traffic infrastructure | Active |
 
 ---
 
@@ -107,7 +107,7 @@ cd green-corridor/server
 npm install
 cp .env.example .env
 # Edit .env → set MONGO_URI and JWT_SECRET
-
+npm run seed 
 # Frontend
 cd ../client
 npm install
@@ -174,6 +174,10 @@ env\Scripts\activate             # Windows
 pip install -r requirements.txt
 ```
 
+T3 ─ gridlock_breaker       → python -m simulation.run_dual
+T4 ─ gridlock_breaker       → uvicorn api.main:app --port 8100
+T5 ─ gridlock_breaker/frontend → npm run dev
+
 **requirements.txt includes:** `stable-baselines3`, `gymnasium`, `traci`, `sumolib`, `numpy`, `pandas`
 
 Make sure `SUMO_HOME` is set:
@@ -232,7 +236,7 @@ mysql -u root -p
 > EXIT;
 
 # 2. Backend
-cd predictive_maintance/backend
+cd predi
 npm install
 # Edit .env:
 #   DATABASE_URL="mysql://root:PASSWORD@localhost:3306/predictive_maintenance"
@@ -243,7 +247,7 @@ npm run db:seed
 # 3. ML Service
 cd ../ml-service
 pip install fastapi uvicorn scikit-learn numpy pandas
-
+ctive_maintance/backend
 # 4. Frontend
 cd ../frontend
 npm install
