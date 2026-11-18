@@ -62,6 +62,12 @@ function KpiCard({ label, baseVal, aiVal, unit, accentClass = 'ocean', lowerIsBe
         </div>
         <div className="kpi-unit" style={{ marginBottom: 8, marginLeft: 'auto' }}>{unit}</div>
       </div>
+      {baseVal != null && aiVal != null && (
+        <div className="kpi-bars" aria-hidden="true">
+          <div className="kpi-bar"><span style={{ width: `${(Math.abs(baseVal) / (Math.max(Math.abs(baseVal), Math.abs(aiVal)) || 1)) * 100}%`, background: COLORS.baseline }} /></div>
+          <div className="kpi-bar"><span style={{ width: `${(Math.abs(aiVal) / (Math.max(Math.abs(baseVal), Math.abs(aiVal)) || 1)) * 100}%`, background: COLORS.ai }} /></div>
+        </div>
+      )}
       {delta != null && (
         <div className={`improvement-tag ${improved ? 'positive' : 'negative'}`}>
           {improved ? '▼' : '▲'} {Math.abs(delta).toFixed(1)}% {improved ? 'improvement' : 'increase'}
@@ -236,6 +242,27 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        {comparison && (() => {
+          const pct = (b, a, lower = true) => b ? ((lower ? b - a : a - b) / b) * 100 : null
+          const wait = pct(comparison.baseline.avg_waiting_time, comparison.ai.avg_waiting_time)
+          const queue = pct(comparison.baseline.avg_queue_length, comparison.ai.avg_queue_length)
+          const tput = pct(comparison.baseline.total_throughput, comparison.ai.total_throughput, false)
+          const fmt = v => v == null ? '—' : `${v > 0 ? '+' : ''}${v.toFixed(1)}%`
+          return (
+            <section className="hero">
+              <div>
+                <div className="hero-eyebrow">PPO Agent vs Fixed-Time Baseline</div>
+                <h1 className="hero-title">AI signal control is {wait > 0 ? 'cutting' : 'changing'} wait times by <span>{wait == null ? '—' : `${Math.abs(wait).toFixed(1)}%`}</span></h1>
+              </div>
+              <div className="hero-stats">
+                <div><strong>{fmt(wait)}</strong><small>Waiting time saved</small></div>
+                <div><strong>{fmt(queue)}</strong><small>Shorter queues</small></div>
+                <div><strong>{fmt(tput)}</strong><small>Throughput gain</small></div>
+              </div>
+            </section>
+          )
+        })()}
 
         {/* ── KPI Summary ── */}
         {comparison && (

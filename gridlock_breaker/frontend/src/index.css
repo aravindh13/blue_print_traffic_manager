@@ -433,3 +433,55 @@ thead th { position: sticky; top: 0; background: #f8fafc; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before { animation: none !important; transition: none !important; }
 }
+
+/* ── Hero summary ── */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 28px 32px;
+  margin-bottom: 28px;
+  border-radius: 24px;
+  color: #fff;
+  background: linear-gradient(120deg, #0f172a 0%, #0c4a6e 55%, #065f46 100%);
+  box-shadow: 0 20px 40px -16px rgba(12, 74, 110, 0.45);
+  animation: rise 0.5s ease both;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 38px, rgba(255,255,255,0.04) 38px 40px);
+  pointer-events: none;
+}
+.hero-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7dd3fc; margin-bottom: 8px; }
+.hero-title { font-size: clamp(20px, 3vw, 28px); font-weight: 800; letter-spacing: -0.5px; max-width: 560px; line-height: 1.25; }
+.hero-title span { color: #6ee7b7; }
+.hero-stats { display: flex; gap: 12px; flex-wrap: wrap; position: relative; z-index: 1; }
+.hero-stats > div {
+  min-width: 120px;
+  padding: 14px 18px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(6px);
+}
+.hero-stats strong { display: block; font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.hero-stats small { font-size: 11px; font-weight: 600; color: #cbd5e1; }
+
+/* ── KPI comparison bars ── */
+.kpi-bars { display: grid; gap: 6px; margin-top: 16px; }
+.kpi-bar { height: 6px; border-radius: 99px; background: var(--bg-secondary); overflow: hidden; }
+.kpi-bar span { display: block; height: 100%; border-radius: inherit; transform-origin: left; animation: grow 0.8s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@media (max-width: 768px) {
+  .hero { padding: 20px; border-radius: 18px; }
+  .hero-stats { width: 100%; }
+  .hero-stats > div { flex: 1; min-width: 0; padding: 10px 12px; }
+  .hero-stats strong { font-size: 18px; }
+}
