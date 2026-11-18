@@ -175,25 +175,9 @@ export default function App() {
             <div className="header-sub">Advanced AI Traffic Coordination System</div>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-          {lastRefresh && <span style={{ color: 'var(--text-tertiary)', fontSize: '11px', fontWeight: '600' }}>LAST SYNC: {lastRefresh}</span>}
-          <button
-            onClick={fetchData}
-            style={{
-              background: 'linear-gradient(135deg, var(--accent-blue), #0ea5e9)',
-              border: 'none',
-              borderRadius: '12px',
-              padding: '10px 20px',
-              color: '#fff',
-              fontSize: '13px',
-              fontWeight: '700',
-              cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(2, 132, 199, 0.2)',
-              transition: 'all 0.2s ease',
-            }}
-            onMouseEnter={e => e.target.style.transform = 'translateY(-1px)'}
-            onMouseLeave={e => e.target.style.transform = 'none'}
-          >↻ Refresh Data</button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center', flexWrap: 'wrap' }}>
+          {lastRefresh && <span className="sync-label" style={{ color: 'var(--text-tertiary)', fontSize: '11px', fontWeight: '600' }}>LAST SYNC: {lastRefresh}</span>}
+          <button className="refresh-btn" onClick={fetchData}>↻ Refresh Data</button>
           <div className="status-badge">
             <div className="status-dot" style={{ background: hasData ? 'var(--accent-green)' : 'var(--accent-orange)', boxShadow: hasData ? '0 0 8px var(--accent-green)' : '0 0 8px var(--accent-orange)' }} />
             {hasData ? 'System Online' : 'Simulation Pending'}
